@@ -123,7 +123,7 @@ void loop() {
     
     if(thisPos < homeY[i] - HOME_SIZE){// набежали полицаи
       velY[i] = -velY[i];
-      newPos2 = 2*(homeY[i] - HOME_SIZE) - thisPos; // ((2*0) - (thisPos+0))-0
+      newPos2 = 2*(homeY[i] - HOME_SIZE) - thisPos;
       if(newPos2<newPos){
         posY[i] = newPos2;
       }else{
