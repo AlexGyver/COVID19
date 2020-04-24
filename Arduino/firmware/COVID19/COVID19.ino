@@ -76,19 +76,68 @@ void loop() {
     //drawRect(posX[i] - DANGER_ZONE, posY[i] - DANGER_ZONE, DANGER_ZONE * 2, ST7735_BLACK);  // зона
 
     // движение по X
-    int thisPos = posX[i] + velX[i];
-    if (thisPos < 0 || thisPos < (homeX[i] - HOME_SIZE) ||
-        thisPos >= DISP_WIDTH || thisPos > (homeX[i] + HOME_SIZE))
+    int16_t thisPos = posX[i] + velX[i];
+    int16_t newPos, newPos2;
+    // вылет за пределы экрана
+    if(thisPos < 0){// набежали пограничники
       velX[i] = -velX[i];
-    else
+      newPos = -thisPos; // ((2*0) - (thisPos+0))-0
+    }else if(thisPos + 1 >= DISP_WIDTH){// набежали пограничники
+      velX[i] = -velX[i];
+      newPos = ((2*DISP_WIDTH) - (thisPos+1)) - 1;
+    }else
+      newPos = thisPos;
+    
+    if(thisPos < homeX[i] - HOME_SIZE){// набежали полицаи
+      velX[i] = -velX[i];
+      newPos2 = 2*(homeX[i] - HOME_SIZE) - thisPos;
+      if(newPos2<newPos){
+        posX[i] = newPos2;
+      }else{
+        posX[i] = newPos;
+      }
+    }else if(thisPos + 1 >= homeX[i] + HOME_SIZE){// набежали полицаи
+      velX[i] = -velX[i];
+      newPos2 = ((2*(homeX[i] + HOME_SIZE)) - (thisPos+1)) - 1;
+      if(newPos2>newPos){
+        posX[i] = newPos2;
+      }else{
+        posX[i] = newPos;
+      }
+    }else
       posX[i] = thisPos;
+    
+    
 
     // движение по Y
     thisPos = posY[i] + velY[i];
-    if (thisPos < 0 || thisPos < (homeY[i] - HOME_SIZE) ||
-        thisPos >= DISP_HEIGHT || thisPos > (homeY[i] + HOME_SIZE))
+    // вылет за пределы экрана
+    if(thisPos < 0){// набежали пограничники
       velY[i] = -velY[i];
-    else
+      newPos = -thisPos; // ((2*0) - (thisPos+0))-0
+    }else if(thisPos + 1 >= DISP_HEIGHT){// набежали пограничники
+      velY[i] = -velY[i];
+      newPos = ((2*DISP_HEIGHT) - (thisPos+1)) - 1;
+    }else
+      newPos = thisPos;
+    
+    if(thisPos < homeY[i] - HOME_SIZE){// набежали полицаи
+      velY[i] = -velY[i];
+      newPos2 = 2*(homeY[i] - HOME_SIZE) - thisPos; // ((2*0) - (thisPos+0))-0
+      if(newPos2<newPos){
+        posY[i] = newPos2;
+      }else{
+        posY[i] = newPos;
+      }
+    }else if(thisPos + 1 >= homeY[i] + HOME_SIZE){// набежали полицаи
+      velY[i] = -velY[i];
+      newPos2 = ((2*(homeY[i] + HOME_SIZE)) - (thisPos+1)) - 1;
+      if(newPos2>newPos){
+        posY[i] = newPos2;
+      }else{
+        posY[i] = newPos;
+      }
+    }else
       posY[i] = thisPos;
 
     // рисуем
