@@ -24,7 +24,7 @@ String log_name = "";             // Имя логов? Если "", то наз
 int objSize = 9;                  // Диаметр частицы
 int windowW = 1600;               // Ширина окна программы
 int windowH = 900;                // Высота окна программы
-int marginR = 300;                // Ширина информации справа
+int marginR = 350;                // Ширина информации справа
 int graph_time = 20;              // Как часто снимать показания зараженных
 
 
@@ -41,7 +41,6 @@ int maxPosX = windowW-marginR-objSize/2;
 int plotCount = 0;
 int value = 0;
 boolean pause = false;
-String keyboard = "";
 
 int[] homeX = new int[AMOUNT];
 int[] homeY = new int[AMOUNT];
