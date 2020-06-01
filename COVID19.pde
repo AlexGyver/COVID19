@@ -40,6 +40,7 @@ int maxPosY = windowH-border-objSize/2;
 int maxPosX = windowW-marginR-objSize/2;
 int plotCount = 0;
 int value = 0;
+boolean pause = false;
 String keyboard = "";
 
 int[] homeX = new int[AMOUNT];
@@ -73,16 +74,9 @@ PImage virus;
 PrintWriter logs;
 PrintWriter config;
 
+import controlP5.*;
+ControlP5 cp5;
 
-int sup_sum(boolean[] array) {
-  int summ = 0;
-  for (int i = 0; i < AMOUNT; i++) {
-    if (array[i]) {
-      summ++;
-    }
-  }
-  return summ;
-}
 
 void settings() {
   size(windowW, windowH);
@@ -92,6 +86,56 @@ void settings() {
 void setup() {  
   frameRate(fps);
   background(#ffffff);
+  Font1 = createFont("Noto Sans", 18);
+  textFont(Font1);
+  strokeWeight(3);
+
+  // Добавляем элементы управления
+  cp5 = new ControlP5(this);
+
+  fill(#621cf2);
+  text("Домашняя зона:", windowW - marginR + border, 135);
+  cp5.addSlider("0").setPosition(maxPosX + 15, 140).setSize(marginR - 30, 30).setFont(Font1).setRange(-1, 50).setValue(HOME_SIZE).setId(0);  
+
+  fill(#ff0055);
+  text("Зона заражения:", windowW - marginR + border, 190);
+  cp5.addSlider("1").setPosition(maxPosX + 15, 195).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 20).setValue(DANGER_ZONE).setId(1);
+
+  fill(#ff0000);
+  text("Вероятность заражения:", windowW - marginR + border, 245); 
+  cp5.addSlider("2").setPosition(maxPosX + 15, 250).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 30).setValue(INFECTION_PROB).setId(2);
+
+  fill(#000000);
+  text("Вероятность смерти:", windowW - marginR + border, 300);
+  cp5.addSlider("3").setPosition(maxPosX + 15, 305).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 30).setValue(DEATH_PROB).setId(3);
+
+  fill(#000000);
+  text("Зона самоизоляции:", windowW - marginR + border, 355);
+  cp5.addSlider("4").setPosition(maxPosX + 15, 360).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 30).setValue(ISOLATION_SIZE).setId(4);
+
+  fill(#000000);
+  text("Процент ходящих в \"магазины\":", windowW - marginR + border, 410);
+  cp5.addSlider("5").setPosition(maxPosX + 15, 415).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 40).setValue(SHOP_PROB).setId(5);
+
+  fill(#000000);
+  text("Время в магазине:", windowW - marginR + border, 465);
+  cp5.addSlider("6").setPosition(maxPosX + 15, 470).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 500).setValue(TIME_IN_SHOP).setId(6);
+
+  fill(#000000);
+  text("Время смерти/выздоровления:", windowW - marginR + border, 520);
+  cp5.addSlider("7").setPosition(maxPosX + 15, 525).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 3000).setValue(deadCount).setId(7);
+
+  fill(#ff8a32);
+  text("Узнать о болезни через:", windowW - marginR + border, 575);
+  cp5.addSlider("8").setPosition(maxPosX + 15, 580).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 2000).setValue(infectTime).setId(8);
+
+  fill(#000000);
+  text("Строить график каждые:", windowW - marginR + border, 630);
+  cp5.addSlider("9").setPosition(maxPosX + 15, 635).setSize(marginR - 30, 30).setFont(Font1).setRange(10, 200).setValue(graph_time).setId(9);
+  
+  fill(#3e97ff);
+  text("Процент носящих маски:", windowW - marginR + border, 685);
+  cp5.addSlider("10").setPosition(maxPosX + 15, 690).setSize(marginR - 30, 30).setFont(Font1).setRange(0, 80).setValue(MASK_PROB).setId(10);
 
   if (emoji) {
     mask = loadImage("img/mask.png");
@@ -107,7 +151,7 @@ void setup() {
 
     shop_time_need[i] = (int)(random(0.6, 1.4)*TIME_IN_SHOP);
 
-    if (SHOP_AMOUNT > 0) resource[i] = (int)random(200, 1500);
+    if (SHOP_AMOUNT > 0) resource[i] = (int)random(0, 1000);
     immunity[i] = false;
     infected[i] = false;
   }
@@ -153,10 +197,6 @@ void setup() {
     }
   }
 
-  Font1 = createFont("Noto Sans", 18);
-  textFont(Font1);
-  strokeWeight(3);
-
   if (log_name == "") {
     log_name = loadStrings("config.txt")[0];
     config = createWriter("config.txt");
@@ -169,59 +209,22 @@ void setup() {
   logs.flush();
 }
 
-void keyPressed() {  // Обновление команды
-  if (keyCode == 16) {
-  } else if (key == '\n') { // Если Enter - обрабатываем команду
-    if (keyboard.length() > 5 && keyboard.substring(0, 4).equals("home")) {
-      HOME_SIZE = int(keyboard.substring(5));
-      for (int i =0; i<AMOUNT; i++) {
-        homeSize[i] = HOME_SIZE;
-      }
-    } else if (keyboard.length() > 6 && keyboard.substring(0, 5).equals("dzone")) {
-      DANGER_ZONE = int(keyboard.substring(6));
-    } else if (keyboard.length() > 6 && keyboard.substring(0, 5).equals("infec")) {
-      INFECTION_PROB = int(keyboard.substring(6));
-    } else if (keyboard.length() > 6 && keyboard.substring(0, 5).equals("death")) {
-      DEATH_PROB = int(keyboard.substring(6));
-    } else if (keyboard.length() > 7 && keyboard.substring(0, 6).equals("isolat")) {
-      ISOLATION_SIZE = int(keyboard.substring(7));
-    } else if (keyboard.length() > 7 && keyboard.substring(0, 6).equals("shop_p")) {
-      SHOP_PROB = int(keyboard.substring(7));
-    } else if (keyboard.length() > 10 && keyboard.substring(0, 9).equals("time_shop")) {
-      TIME_IN_SHOP = int(keyboard.substring(10));
-    } else if (keyboard.length() > 10 && keyboard.substring(0, 9).equals("dead_time")) {
-      deadCount = int(keyboard.substring(10));
-    } else if (keyboard.length() > 11 && keyboard.substring(0, 10).equals("infec_time")) {
-      infectTime = int(keyboard.substring(11));
-    } else if (keyboard.length() > 11 && keyboard.substring(0, 10).equals("graph_time")) {
-      graph_time = int(keyboard.substring(11));
-    } else if (keyboard.length() > 10 && keyboard.substring(0, 9).equals("mask_prob")) {
-      MASK_PROB = int(keyboard.substring(10));
-
-      for (int i = 0; i < AMOUNT; i+=FAMILY_SIZE) {
-        boolean mask_fam_bool = random(100) < MASK_PROB;
-
-        for (int j = 0; j < FAMILY_SIZE; j++) {
-          int k = i+j;
-          if (k < AMOUNT) mask_bool[k] = mask_fam_bool;
-        }
-      }
-    }
-
-    keyboard = ""; // Обнуляем команду
-  } else if  (keyCode == 8) { // Backspace
-    keyboard = keyboard.substring(0, keyboard.length()-1);
-  } else { // Добавляем кнопку
-    keyboard += key;
-  }
+void keyPressed() {
+  if (keyCode == 32) pause = !pause; // Пробел - пауза
 }
 
 void draw() {
-  stroke(#000000);  
-  fill(#ffffff);
-  rect(border, border, windowW-border - marginR, windowH-border*2); // Прямоугольник с частицами
-  noStroke();
-  moveObj(); // Двигаем частицы и инфо
+  if (!pause) {
+    stroke(#000000);  
+    fill(#ffffff);
+    rect(border, border, windowW-border - marginR, windowH-border*2); // Прямоугольник с частицами закрашиваем белым
+    noStroke();
+    moveObj(); // Двигаем частицы и инфо
+  } else { // Если пауза нарисуем ее значок
+    stroke(#505050);
+    line(2*border, 2*border, 2*border, 2*border+20);  
+    line(2*border+10, 2*border, 2*border+10, 2*border+20);
+  }
 }
 
 void moveObj() {  
@@ -333,11 +336,11 @@ void moveObj() {
 
   time++;
   if (time % graph_time == 0) { // Здесь мы выводим информацию о кол-ве зараженных (график) + логи
-    stroke(#ffffff);
-    line(maxPosX + 2*border, 140+plotCount*4, maxPosX + 2*border +(float)(marginR - 2*border), 140+plotCount*4);   
-    stroke(#505050);
-    line(maxPosX + 2*border, 140+plotCount*4, maxPosX + 2*border +(float)(marginR - 2*border)*infectedAmount/AMOUNT, 140+plotCount*4);  
-    noStroke();
+    //stroke(#ffffff);
+    //line(maxPosX + 2*border, 140+plotCount*4, maxPosX + 2*border +(float)(marginR - 2*border), 140+plotCount*4);   
+    //stroke(#505050);
+    //line(maxPosX + 2*border, 140+plotCount*4, maxPosX + 2*border +(float)(marginR - 2*border)*infectedAmount/AMOUNT, 140+plotCount*4);  
+    //noStroke();
     plotCount++;
     if (4*plotCount > (windowH-160)) plotCount = 0;
 
@@ -347,28 +350,76 @@ void moveObj() {
   }
 
   fill(#ffffff);
-  rect(windowW - marginR + border, 0, marginR, 130); // Очищаем поле для информации
-
-  fill(#666666);
-  text("Команда:", windowW - marginR + border, 25); // "Команда"
-  text(keyboard, windowW - marginR+90+border, 25); // Команда
+  rect(windowW - marginR + border, 0, marginR, 105); // Очищаем поле для информации
 
   fill(#ff0000);
-  text("Больные:", windowW - marginR + border, 50); // "Инфецированные"
-  text(infectedAmount, windowW - marginR+90+border, 50); // Их количество
+  text("Больные:", windowW - marginR + border, 25); // "Инфецированные"
+  text(infectedAmount, windowW - marginR+90+border, 25); // Их количество
 
   fill(#505050);
-  text("Умершие:", windowW - marginR + border, 75); // "Умершие"
-  text(deadAmount, windowW - marginR+100+border, 75); // Их количество
+  text("Умершие:", windowW - marginR + border, 50); // "Умершие"
+  text(deadAmount, windowW - marginR+100+border, 50); // Их количество
 
   fill(#00ff00);
-  text("Вылечившиеся:", windowW - marginR + border, 100); // "Вылечившиеся"
-  text(immunityAmount, windowW - marginR+150+border, 100); // Их количество
+  text("Вылечившиеся:", windowW - marginR + border, 75); // "Вылечившиеся"
+  text(immunityAmount, windowW - marginR+150+border, 75); // Их количество
 
   fill(#0000ff);
-  text("Время:", windowW - marginR + border, 125); // "Время"
-  text(time, windowW - marginR + border + 70, 125);
+  text("Время:", windowW - marginR + border, 100); // "Время"
+  text(time, windowW - marginR + border + 70, 100);
 
   if (time == measPeriod) for (;; ); // Тупо зацикливание
   if (infectedAmount == 0 || infectedAmount+deadAmount == AMOUNT) for (;; );
+}
+
+void controlEvent(ControlEvent theEvent) {
+  switch(theEvent.getController().getId()) {
+    case(0):
+    HOME_SIZE = (int)(theEvent.getController().getValue());
+    if (theEvent.getController().getValue() < 0) HOME_SIZE = max(windowW, windowH);
+
+    for (int i =0; i<AMOUNT; i++) {
+      homeSize[i] = HOME_SIZE;
+    }
+    break;
+    case(1): 
+    DANGER_ZONE = (int)(theEvent.getController().getValue()); 
+    break;
+    case(2): 
+    INFECTION_PROB = (int)(theEvent.getController().getValue()); 
+    break;
+    case(3): 
+    DEATH_PROB = (int)(theEvent.getController().getValue()); 
+    break;
+    case(4): 
+    ISOLATION_SIZE = (int)(theEvent.getController().getValue()); 
+    break;
+    case(5): 
+    SHOP_PROB = (int)(theEvent.getController().getValue()); 
+    break;
+    case(6): 
+    TIME_IN_SHOP = (int)(theEvent.getController().getValue()); 
+    break;
+    case(7): 
+    deadCount = (int)(theEvent.getController().getValue()); 
+    break;
+    case(8): 
+    infectTime = (int)(theEvent.getController().getValue()); 
+    break;
+    case(9): 
+    graph_time = (int)(theEvent.getController().getValue()); 
+    break;
+    case(10): 
+    MASK_PROB = (int)(theEvent.getController().getValue()); 
+
+    for (int i = 0; i < AMOUNT; i+=FAMILY_SIZE) {
+      boolean mask_fam_bool = random(100) < MASK_PROB;
+
+      for (int j = 0; j < FAMILY_SIZE; j++) {
+        int k = i+j;
+        if (k < AMOUNT) mask_bool[k] = mask_fam_bool;
+      }
+    }
+    break;
+  }
 }
