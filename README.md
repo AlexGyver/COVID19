@@ -56,3 +56,14 @@ int graph_time = 20;              // Как часто снимать показ
 - При нажатии на пробел можно поставить симуляцию на паузу и отредактировать параметры
 
 *По мере разработки этот раздел будет пополняться*
+
+## Обсуждение на форуме
+https://community.alexgyver.ru/threads/simuljacija-koronavirusa.3077/
+
+## Ссылки на компоненты для Ардуино-версии
+- Arduino NANO https://ali.ski/so_g7c
+- Дисплей https://ali.ski/nyESv
+
+## Схема для Arduino-версии
+![SCHEME](Arduino/schemes/scheme.jpg)
+
