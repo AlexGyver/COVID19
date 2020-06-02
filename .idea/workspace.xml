@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="049ed66f-543f-4c74-a5cc-8839671c3940" name="Default Changelist" comment="del" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1cdoL8BA3oOdXUoChIMTYcCgtSq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="049ed66f-543f-4c74-a5cc-8839671c3940" name="Default Changelist" comment="" />
+      <created>1590867772523</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590867772523</updated>
+      <workItem from="1590867774165" duration="53000" />
+      <workItem from="1590868638942" duration="613000" />
+      <workItem from="1590872340791" duration="821000" />
+      <workItem from="1590996833256" duration="678000" />
+      <workItem from="1590999228053" duration="807000" />
+    </task>
+    <task id="LOCAL-00001" summary="new">
+      <created>1590867789406</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1590867789406</updated>
+    </task>
+    <task id="LOCAL-00002" summary="del">
+      <created>1590867815890</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1590867815890</updated>
+    </task>
+    <task id="LOCAL-00003" summary="rename">
+      <created>1590868650116</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1590868650116</updated>
+    </task>
+    <task id="LOCAL-00004" summary="del">
+      <created>1590872553463</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1590872553463</updated>
+    </task>
+    <task id="LOCAL-00005" summary="GUI">
+      <created>1590996909653</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1590996909653</updated>
+    </task>
+    <task id="LOCAL-00006" summary="GUI">
+      <created>1590999247064</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1590999247064</updated>
+    </task>
+    <task id="LOCAL-00007" summary="del">
+      <created>1591000930860</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1591000930860</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="new" />
+    <MESSAGE value="rename" />
+    <MESSAGE value="GUI" />
+    <MESSAGE value="del" />
+    <option name="LAST_COMMIT_MESSAGE" value="del" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="460" y="191" key="Vcs.Push.Dialog.v2" timestamp="1591000932128">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="460" y="191" key="Vcs.Push.Dialog.v2/0.0.1920.1035@0.0.1920.1035" timestamp="1591000932128" />
+    <state x="722" y="415" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1590996837258">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="722" y="415" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1035@0.0.1920.1035" timestamp="1590996837258" />
+  </component>
+</project>
