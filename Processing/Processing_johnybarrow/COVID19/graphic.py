@@ -49,4 +49,3 @@ plt.grid()
 plt.legend()
 
 plt.savefig(f'{PATH}.png')
-plt.show()
